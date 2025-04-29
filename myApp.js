@@ -1,7 +1,33 @@
 require('dotenv').config();
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
 
-let Person;
+const personSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+    validate: {
+      validator: (value) => {
+        return validator.isAlpha(value);
+      },
+      message: (props) => `${props.value} is not a valid name!`,
+    },
+  },
+  age: {
+    type: Number,
+    min: 0,
+    max: 120,
+  },
+  favoriteFoods: [String],
+})
+
+let Person = mongoose.model('Person', personSchema);
 
 const createAndSavePerson = (done) => {
   done(null /*, data*/);
