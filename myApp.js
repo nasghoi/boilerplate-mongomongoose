@@ -38,8 +38,32 @@ const createAndSavePerson = (done) => {
   });
 };
 
+var arrayOfPeople = [
+  {
+    name: "Nasrul",
+    age: 24,
+    favouriteFoods: ["Nasi Lemak", "Teh Tarik"],
+  },
+  {
+    name: "Zainab",
+    age: 24,
+    favoriteFoods: ["Nasi Goreng Kampung", "Teh O Ais"],
+  },
+  {
+    name: "Rafah",
+    age: 8,
+    favoriteFoods: ["Nasi Ayam", "Milo Ais"],
+  },
+];
+
 const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+  Person.create(arrayOfPeople, (err, data) => {
+    if (err) {
+      console.log(err);
+      return done(err);
+    }
+    done(null, data);
+  });
 };
 
 const findPeopleByName = (personName, done) => {
